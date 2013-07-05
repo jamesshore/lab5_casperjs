@@ -6,7 +6,7 @@ This repository contains the sample code for the titular [Lessons Learned episod
 The source code in this repository demonstrates how to use PhantomJS to conduct an end-to-end smoke test including front-end JavaScript code. The test files are:
 
 1. `src/_smoke_test.js` starts the server and runs PhantomJS.
-2. `src/__phantomjs.js` contains the actual test code that runs inside PhantomJS.
+2. `src/_phantomjs.js` contains the actual test code that runs inside PhantomJS.
 
 The production code (`src/run.js`, `src/client/`, and `src/server/`) displays a text field and validates whether it's empty. (You may also find unit tests in the production code directories. They use the pattern `_*_test.js`.)
 
@@ -26,7 +26,7 @@ To run the smoke test only:
 
 1. Run `./jake.sh smoketest` (Unix/Mac) or `jake smoketest` (Windows).
 
-To run all tests (JSHint, server-side unit tests, and client-side unit tests):
+To run all tests (JSHint, server-side unit tests, and client-side unit tests, in addition to the smoke tests):
 
 1. Run `./jake.sh karma` (Unix/Mac) or `jake karma` (Windows) to start the Karma server.
 2. Start the browsers you want to test against and point each one at `http://localhost:8080`.

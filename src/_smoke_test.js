@@ -8,22 +8,39 @@
 	var PORT = "5000";
 	var BASE_URL = "http://localhost:" + PORT;
 
-	var child;
+	var serverProcess;
 
 	exports.setUp = function(done) {
-		var stdout = "";
-
-		var web = parseProcfile();
-		child = child_process.spawn(web.command, web.options, { stdio: "pipe" });
-		child.stdout.setEncoding("utf8");
-		child.stdout.on("data", function(chunk) {
-			if (stdout !== null) stdout += chunk;
-			if (stdout.trim() === "Server started") {
-				stdout = null;
-				done();
-			}
-		});
+		startServer(done);
 	};
+
+	exports.tearDown = function(done) {
+		stopServer(done);
+	};
+
+	function startServer(done) {
+		launchProcess();
+		waitForServerToBeReady(done);
+
+		function launchProcess() {
+			var commandLine = parseProcfile();
+			serverProcess = child_process.spawn(commandLine.command, commandLine.options, { stdio: ["pipe", "pipe", process.stderr] });
+		}
+
+		function waitForServerToBeReady(callback) {
+			var stdout = "";
+			serverProcess.stdout.setEncoding("utf8");
+			serverProcess.stdout.on("data", function(chunk) {
+				if (stdout !== null) stdout += chunk;
+				if (stdout.trim() === "Server started") callback();
+			});
+		}
+	}
+
+	function stopServer(done) {
+		serverProcess.on("exit", done);
+		serverProcess.kill();
+	}
 
 	function parseProcfile() {
 		var file = fs.readFileSync("Procfile", "utf8");
@@ -34,28 +51,5 @@
 		});
 		return web;
 	}
-
-	exports.tearDown = function(done) {
-		child.on("exit", function() {
-			done();
-		});
-		child.kill();
-	};
-
-//	exports.test_localhost = function(test) {
-//		var HOME_PAGE_MARKER = "Hello World";
-//
-//		checkMarker(BASE_URL, HOME_PAGE_MARKER, function(foundMarker) {
-//			if (!foundMarker) test.fail("smoke tests failed");
-//			test.done();
-//		});
-//	};
-//
-//	function checkMarker(url, marker, callback) {
-//		httpUtil.getPage(url, function(error, response, responseText) {
-//				var foundMarker = responseText.indexOf(marker) !== -1;
-//				callback(foundMarker);
-//		});
-//	}
 
 }());

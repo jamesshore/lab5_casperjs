@@ -48,7 +48,7 @@
 	desc("Run smoke test");
 	task("smoketest", function() {
 		nodeunit.runTests(smokeTestFiles(), complete, fail);
-	});
+	}, {async: true});
 
 	function browserFilesToLint() {
 		var files = new jake.FileList();

@@ -46,7 +46,9 @@
 	}
 
 	function stopServer(done) {
-		serverProcess.on("exit", done);
+		serverProcess.on("exit", function(code, signal) {
+			done();
+		});
 		serverProcess.kill();
 	}
 

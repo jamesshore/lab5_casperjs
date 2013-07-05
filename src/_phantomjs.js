@@ -4,30 +4,25 @@
 (function() {
 	"use strict";
 
+	var URL = "http://localhost:5000";
+
 	var page = require("webpage").create();
 
 	page.onConsoleMessage = function(message) {
 		console.log("CONSOLE: " + message);
 	};
 
-	page.open("http://localhost:5000", function(success) {
-		console.log("Exiting... " + success);
-		phantom.exit(0);
+	page.open(URL, function(success) {
+		if (success !== "success") die("PhantomJS could not load " + URL);
 
-//		try {
-//			var error = page.evaluate(inBrowser);
-//			if (error) {
-//				console.log(error);
-//				phantom.exit(1);
-//			}
-//			else {
-//				phantom.exit(0);
-//			}
-//		}
-//		catch(err) {
-//			console.log("Exception in PhantomJS code");
-//			phantom.exit(1);
-//		}
+		try {
+			var error = page.evaluate(inBrowser);
+			if (error) die(error);
+			else phantom.exit(0);
+		}
+		catch(err) {
+			die("Exception from PhantomJS: " + err);
+		}
 	});
 
 	function inBrowser() {
@@ -51,6 +46,11 @@
 		catch(err) {
 			return "Exception in PhantomJS browser code";
 		}
+	}
+
+	function die(error) {
+		console.log(error);
+		phantom.exit(1);
 	}
 
 }());

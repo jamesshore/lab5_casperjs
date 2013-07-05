@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Test Marker: Home Page -->
+    <title>PhantomJS Smoke Testing Example</title>
+
+    <script src="example.js" type="text/javascript"></script>
+
+    <style type="text/css">
+        .example-required {
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <p><label for="textField">Example field: </label><input id="textField" type="text" /></p>
+
+    <p><input type="submit" value="Validate" onclick="example.validateTextField(document.getElementById('textField'));"/></p>
+</body>
+</html>

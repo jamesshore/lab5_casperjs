@@ -33,7 +33,7 @@
 	});
 
 	desc("Test everything");
-	task("test", ["testServer", "testClient"]);
+	task("test", ["testServer", "testClient", "smoketest"]);
 
 	desc("Test node.js code");
 	task("testServer", function() {
@@ -45,13 +45,21 @@
 		karma.runTests(REQUIRED_BROWSERS, complete, fail);
 	}, {async: true});
 
+	desc("Run smoke test");
+	task("smoketest", function() {
+		nodeunit.runTests(smokeTestFiles(), complete, fail);
+	});
+
+	function browserFilesToLint() {
+		var files = new jake.FileList();
+		files.include("src/client/**/*.js");
+		return files.toArray();
+	}
+
 	function nodeFilesToTest() {
-		var testFiles = new jake.FileList();
-		testFiles.include("src/_*_test.js");
-		testFiles.include("src/server/**/_*_test.js");
-		testFiles.exclude("node_modules");
-		var tests = testFiles.toArray();
-		return tests;
+		var files = new jake.FileList();
+		files.include("src/server/**/_*_test.js");
+		return files.toArray();
 	}
 
 	function nodeFilesToLint() {
@@ -63,10 +71,8 @@
 		return files.toArray();
 	}
 
-	function browserFilesToLint() {
-		var files = new jake.FileList();
-		files.include("src/client/**/*.js");
-		return files.toArray();
+	function smokeTestFiles() {
+		return [ "src/_smoke_test.js" ];
 	}
 
 	function globalLintOptions() {

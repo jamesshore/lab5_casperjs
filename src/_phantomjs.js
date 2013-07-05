@@ -1,5 +1,5 @@
 // Copyright (c) 2013 Titanium I.T. LLC. All rights reserved. See LICENSE.TXT for details.
-/*global phantom, $ */
+/*global phantom, document, example */
 
 (function() {
 	"use strict";
@@ -27,8 +27,18 @@
 
 	function inBrowser() {
 		try {
-			console.log("HI");
-			return null;
+			var textField = document.getElementById("textField");
+			var validateButton = document.getElementById("validate");
+
+			validateButton.click();
+			var actual = textField.getAttribute("class");
+			var expected = example.REQUIRED_FIELD_CLASS;
+			if (actual !== expected) return "textField class expected " + expected + " but was " + actual;
+			else return null;
+
+
+//			console.log("HI");
+//			return null;
 //			var client = require("./client.js");
 //			var HtmlElement = require("./html_element.js");
 //

@@ -25,6 +25,8 @@
 		});
 	};
 
+	// Note: comprehensive server unit tests are outside the scope of this example.
+
 	function getPage(url, callback) {
 		var request = http.get(url);
 		request.on("response", function(response) {

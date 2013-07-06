@@ -16,9 +16,12 @@
 		if (success !== "success") die("PhantomJS could not load " + URL);
 
 		try {
-			runTest(inBrowserTest);
-			runTest(userInteractionTest);
-			phantom.exit(0);
+			var error;
+			error = inBrowserTest();
+			if (!error) error = userInteractionTest();
+
+			if (error) die(error);
+			else phantom.exit(0);
 		}
 		catch(err) {
 			die("Exception from PhantomJS: " + err.stack);
@@ -29,11 +32,11 @@
 		return page.evaluate(function() {
 			try {
 				// Get the DOM elements
-				var textField = document.getElementById("textField");
-				var validateButton = document.getElementById("validate");
+				var textField = document.getElementById("text_field");
+				var submitLink = document.getElementById("submit_link");
 
 				// Click the validate button
-				validateButton.click();
+				submitLink.click();
 
 				// Check the CSS class
 				var actual = textField.className;
@@ -42,7 +45,7 @@
 				else return null;
 			}
 			catch(err) {
-				return "Exception in PhantomJS browser code";
+				return "Exception in PhantomJS browser code: " + err.stack;
 			}
 		});
 	}
@@ -71,14 +74,11 @@
 		});
 	}
 
-	function runTest(testFn) {
-		var error = testFn();
-		if (error) die(error);
-	}
-
 	function die(error) {
 		console.log(error);
 		phantom.exit(1);
+		// Note: exit() doesn't take effect until execution is finished. So if you call exit(0)
+		// after calling die(), PhantomJS will exit with errorcode 0, not errorcode 1. Be careful!
 	}
 
 }());

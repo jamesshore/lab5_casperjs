@@ -17,6 +17,7 @@
 
 		try {
 			var error;
+
 			error = inBrowserTest();
 			if (!error) error = userInteractionTest();
 
@@ -29,14 +30,17 @@
 	});
 
 	function inBrowserTest() {
+		page.render("deleteme.png");
 		return page.evaluate(function() {
 			try {
 				// Get the DOM elements
 				var textField = document.getElementById("text_field");
 				var submitLink = document.getElementById("submit_link");
 
-				// Click the validate button
-				submitLink.click();
+				// Click the submit link (note: submitLink.click() is not supported by PhantomJS at the time of this writing)
+				var event = document.createEvent("MouseEvent");
+				event.initMouseEvent("click");
+				submitLink.dispatchEvent(event);
 
 				// Check the CSS class
 				var actual = textField.className;
@@ -53,24 +57,34 @@
 	function userInteractionTest() {
 		// Get validate button location
 		var location = page.evaluate(function() {
-			var validateButton = document.getElementById("validate");
-			var bounds = validateButton.getBoundingClientRect();
-			return {
-				x: bounds.left + document.body.scrollLeft,
-				y: bounds.top + document.body.scrollTop
-			};
+			try {
+				var submitLink = document.getElementById("submit_link");
+				var bounds = submitLink.getBoundingClientRect();
+				return {
+					x: bounds.left + document.body.scrollLeft,
+					y: bounds.top + document.body.scrollTop
+				};
+			}
+			catch(err) {
+				return "Exception in PhantomJS browser code: " + err.stack;
+			}
 		});
 
-		// Click the validate button
+		// Click the submit link
 		page.sendEvent("click", location.x, location.y);
 
 		// Check the CSS class
 		return page.evaluate(function() {
-			var textField = document.getElementById("textField");
-			var actual = textField.className;
-			var expected = example.REQUIRED_FIELD_CLASS;
-			if (actual !== expected) return "textField class expected " + expected + " but was " + actual;
-			else return null;
+			try {
+				var textField = document.getElementById("text_field");
+				var actual = textField.className;
+				var expected = example.REQUIRED_FIELD_CLASS;
+				if (actual !== expected) return "textField class expected " + expected + " but was " + actual;
+				else return null;
+			}
+			catch(err) {
+				return "Exception in PhantomJS browser code: " + err.stack;
+			}
 		});
 	}
 

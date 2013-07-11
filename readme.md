@@ -8,7 +8,7 @@ The source code in this repository demonstrates how to use PhantomJS to conduct 
 1. `src/_smoke_test.js` starts the server and runs PhantomJS.
 2. `src/_phantomjs.js` contains the actual test code that runs inside PhantomJS.
 
-The production code (`src/run.js`, `src/client/`, and `src/server/`) displays a text field and validates whether it's empty. (You may also find unit tests in the production code directories. They use the pattern `_*_test.js`.)
+The production code displays a text field and validates whether it's empty. You can find the code in `src/client/` and `src/server/`. Unit tests can also be found in those folders.
 
 For further details about how this code works, watch [the screencast](http://www.letscodejavascript.com/v3/episodes/lessons_learned/13).
 
@@ -26,7 +26,7 @@ To run the smoke test only:
 
 1. Run `./jake.sh smoketest` (Unix/Mac) or `jake smoketest` (Windows).
 
-To run all tests (JSHint, server-side unit tests, and client-side unit tests, in addition to the smoke tests):
+To run a full build (JSHint, server-side unit tests, and client-side unit tests, and smoke tests):
 
 1. Run `./jake.sh karma` (Unix/Mac) or `jake karma` (Windows) to start the Karma server.
 2. Start the browsers you want to test against and point each one at `http://localhost:8080`.

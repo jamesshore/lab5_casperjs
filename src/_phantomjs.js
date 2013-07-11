@@ -90,7 +90,7 @@
 	function die(error) {
 		console.log(error);
 		phantom.exit(1);
-		// Note: exit() doesn't take effect until execution is finished. So if you call exit(0)
+		// Note: exit() doesn't take effect until the next tick. So if you call exit(0)
 		// after calling die(), PhantomJS will exit with errorcode 0, not errorcode 1. Be careful!
 	}
 

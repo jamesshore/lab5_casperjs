@@ -30,7 +30,6 @@
 	});
 
 	function inBrowserTest() {
-		page.render("deleteme.png");
 		return page.evaluate(function() {
 			try {
 				// Get the DOM elements

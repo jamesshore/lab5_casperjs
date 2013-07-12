@@ -1,4 +1,4 @@
-Lessons Learned: PhantomJS and Front-End Smoke Tests
+Lessons Learned: PhantomJS and Front-End Smoke Testing
 =============
 
 This repository contains the sample code for the titular [Lessons Learned episode](http://www.letscodejavascript.com/v3/episodes/lessons_learned/13) of James Shore's [Let's Code: Test-Driven JavaScript](http://www.letscodejavascript.com) screencast. Let's Code: Test-Driven JavaScript is a screencast series focused on rigorous, professional JavaScript development.

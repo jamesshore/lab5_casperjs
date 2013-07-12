@@ -60,8 +60,8 @@
 				var submitLink = document.getElementById("submit_link");
 				var bounds = submitLink.getBoundingClientRect();
 				return {
-					x: bounds.left + document.body.scrollLeft,
-					y: bounds.top + document.body.scrollTop
+					x: bounds.left,
+					y: bounds.top
 				};
 			}
 			catch(err) {

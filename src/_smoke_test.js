@@ -4,6 +4,7 @@
 	var child_process = require("child_process");
 	var fs = require("fs");
 	var procfile = require("procfile");
+	var path = require("path");
 
 	var PORT = "5000";
 	var BASE_URL = "http://localhost:" + PORT;
@@ -16,6 +17,17 @@
 
 	exports.tearDown = function(done) {
 		stopServer(done);
+	};
+
+	exports.test_runCasperJsTests = function(test) {
+		var casperJsProcess = child_process.spawn("node_modules/.bin/casperjs", [ "test", "src/_casperjs.js" ], {
+			stdio: "inherit",
+			env: { "PHANTOMJS_EXECUTABLE": path.resolve("./node_modules/phantomjs/lib/phantom/bin/phantomjs") }
+		});
+		casperJsProcess.on("exit", function(code) {
+			test.equals(code, 0, "CasperJS test failures");
+			test.done();
+		});
 	};
 
 	exports.test_runPhantomJsTests = function(test) {

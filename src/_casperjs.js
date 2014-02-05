@@ -4,9 +4,17 @@
 (function() {
 	"use strict";
 
-	casper.test.begin('Friendly test', function suite(test) {
-		test.assertEquals("friendly", "friendly");
-	  test.done();
+	var URL = "http://localhost:5000";
+	var REQUIRED_FIELD_CLASS = "example-required";
+
+	casper.test.begin('simulated mouse click (browser event)', function suite(test) {
+		casper.start(URL)
+		.thenClick("#submit_link")
+		.then(function() {
+			test.assertExists("#text_field." + REQUIRED_FIELD_CLASS);
+		}).run(function() {
+			test.done();
+		});
 	});
 
 }());

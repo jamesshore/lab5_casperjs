@@ -7,13 +7,28 @@
 	var URL = "http://localhost:5000";
 	var REQUIRED_FIELD_CLASS = "example-required";
 
-	casper.test.begin('simulated mouse click (browser event)', function suite(test) {
-		casper.start(URL)
-		.thenClick("#submit_link")
+	casper.test.setUp(function(done) {
+		casper.start(URL).run(done);
+	});
+
+	casper.test.begin("click by element", function(test) {
+		casper.thenClick("#submit_link")
 		.then(function() {
 			test.assertExists("#text_field." + REQUIRED_FIELD_CLASS);
 		}).run(function() {
 			test.done();
+		});
+	});
+
+	casper.test.begin("click by coordinate (example only; not something to do normally)", function(test) {
+		casper.then(function() {
+			var bounds = casper.getElementBounds("#submit_link");
+			test.assertTruthy(bounds, "should have submit button");
+			casper.mouse.click(bounds.left, bounds.top);
+		}).then(function() {
+			test.assertExists("#text_field." + REQUIRED_FIELD_CLASS);
+		}).run(function() {
+				test.done();
 		});
 	});
 

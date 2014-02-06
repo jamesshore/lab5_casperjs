@@ -22,7 +22,7 @@ Running the Tests
 Before running the tests for the first time:
 
 1. Install [Node.js](http://nodejs.org/download/).
-2. Download and unzip [the source code](https://github.com/jamesshore/ll10_gui_test_strategies/archive/master.zip) into a convenient directory.
+2. Download and unzip the source code into a convenient directory.
 3. All commands must run from the root of the source tree: `cd <directory>`.
 
 On Windows, CasperJS requires Python and .NET. The CasperJS part of the build has not been tested on Windows.

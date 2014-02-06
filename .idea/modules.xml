@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/13_phantomjs_smoke_test.iml" filepath="$PROJECT_DIR$/.idea/13_phantomjs_smoke_test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/lab5_casperjs.iml" filepath="$PROJECT_DIR$/.idea/lab5_casperjs.iml" />
     </modules>
   </component>
 </project>

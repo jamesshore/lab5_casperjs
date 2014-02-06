@@ -22,7 +22,7 @@
 	exports.test_runCasperJsTests = function(test) {
 		var casperJsProcess = child_process.spawn("node_modules/.bin/casperjs", [ "test", "src/_casperjs.js" ], {
 			stdio: "inherit",
-			env: { "PHANTOMJS_EXECUTABLE": path.resolve("./node_modules/phantomjs/lib/phantom/bin/phantomjs") }
+			env: { "PHANTOMJS_EXECUTABLE": "./node_modules/phantomjs/lib/phantom/bin/phantomjs" }
 		});
 		casperJsProcess.on("exit", function(code) {
 			test.equals(code, 0, "CasperJS test failures");
